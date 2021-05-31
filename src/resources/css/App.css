@@ -1,3 +1,11 @@
+.btn {
+  color: white;
+}
+
+.btn-primary:hover {
+  color: white;
+}
+
 .App {
   text-align: center;
 }
