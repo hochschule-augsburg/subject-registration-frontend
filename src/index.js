@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './resources/css/index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './resources/css/CustomBootstrap.scss';
+// uncomment when bootstrap JS is needed
+//import 'bootstrap/dist/js/bootstrap.bundle';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
