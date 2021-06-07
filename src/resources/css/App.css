@@ -15,6 +15,20 @@ a:hover {
   color: white;
 }
 
+.btn-primary:hover {
+  color: white;
+}
+
+.card-title {
+  color: #F00045;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  color: #4D4D4D;
+  font-weight: 600;
+}
+
 .container {
   margin-left: 0;
 }
