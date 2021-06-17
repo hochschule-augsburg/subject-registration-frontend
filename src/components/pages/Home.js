@@ -1,3 +1,5 @@
+import Navbar from "../layout/Navbar";
+
 /**
  * Main page of the application.
  * @return {JSX.Element}
@@ -6,6 +8,7 @@
 function Home() {
     return (
         <>
+            <Navbar />
             <div className="container">
                 <div className="row">
                     <h2>Startseite</h2>

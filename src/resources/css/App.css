@@ -32,3 +32,7 @@ a:hover {
 .container {
   margin-left: 0;
 }
+
+.navbar {
+  margin-bottom: 1em;
+}
