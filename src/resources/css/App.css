@@ -29,8 +29,8 @@ a:hover {
   font-weight: 600;
 }
 
-.container {
-  margin-left: 0;
+.container.main {
+  padding-left: 3em;
 }
 
 .navbar {

@@ -1,4 +1,5 @@
 import Navbar from "../layout/Navbar";
+import BurgerMenu from "../layout/BurgerMenu";
 
 /**
  * Main page of the application.
@@ -9,7 +10,8 @@ function Home() {
     return (
         <>
             <Navbar />
-            <div className="container">
+            <BurgerMenu name="home" />
+            <div className="container main">
                 <div className="row">
                     <h2>Startseite</h2>
                     <p>Herzlich Willkommen bei der WPF-Anmeldeseite!<br/>Auf der linken Seite finden Sie ale nötigen

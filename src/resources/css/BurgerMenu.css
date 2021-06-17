@@ -1,0 +1,26 @@
+.account-details {
+    text-align: center;
+}
+
+.burger-menu {
+    position: absolute;
+    top: 76px;
+    width: 15%;
+    height: 100%;
+    background-color: #f8f8f8;
+    /* transition: 0.3s all ease; */
+}
+
+.burger-menu > .nav-link {
+    height: 3.5em;
+    line-height: 2.5em;
+}
+
+.burger-menu > .nav-link:hover {
+    background-color: #F00045;
+    color: white;
+}
+
+.icon-burger-menu {
+    cursor: pointer;
+}
