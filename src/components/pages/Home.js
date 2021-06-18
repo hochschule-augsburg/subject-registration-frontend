@@ -1,5 +1,6 @@
 import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
+import {URLS} from "../../App";
 
 /**
  * Main page of the application.
@@ -10,7 +11,7 @@ function Home() {
     return (
         <>
             <Navbar />
-            <BurgerMenu name="home" />
+            <BurgerMenu name={URLS.HOME} />
             <div className="container main">
                 <div className="row">
                     <h2>Startseite</h2>

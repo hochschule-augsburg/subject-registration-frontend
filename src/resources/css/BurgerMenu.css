@@ -11,6 +11,10 @@
     /* transition: 0.3s all ease; */
 }
 
+.burger-menu.collapsed {
+    width: 50px;
+}
+
 .burger-menu > .nav-link {
     height: 3.5em;
     line-height: 2.5em;
@@ -23,4 +27,14 @@
 
 .icon-burger-menu {
     cursor: pointer;
+    margin-bottom: 0.25em;
+}
+
+.icon-burger-menu:hover {
+    background: #eae9e9;
+}
+
+.icon-burger-menu.collapsed {
+    cursor: pointer;
+    visibility: hidden;
 }

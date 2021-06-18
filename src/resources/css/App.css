@@ -29,8 +29,14 @@ a:hover {
   font-weight: 600;
 }
 
+/* css for the main container of each page */
 .container.main {
   padding-left: 3em;
+}
+
+.container.main.expanded {
+  float: left;
+  padding-left: 4.5em;
 }
 
 .navbar {
