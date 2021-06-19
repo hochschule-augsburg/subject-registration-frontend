@@ -8,16 +8,18 @@ import SubjectCardView from "../SubjectCardView";
  * @constructor
  */
 function SubjectOverview() {
-    const [subjects, setSubjects] = useState([]);
+    const [subjects, setSubjects] = useState(null);
 
     useEffect(() => {
-        return callAPI('get', 'subject', {})
-            .then((response) => {
-                setSubjects(response.data);
-                console.log(subjects);
-            })
-            .catch((err) => console.log(`Error! ${err}`));
-    }, []);
+        if (!subjects) {
+            console.log('get subjects!');
+            return callAPI('get', 'subject', {})
+                .then((response) => {
+                    setSubjects(response.data);
+                })
+                .catch((err) => console.log(`Error! ${err}`));
+        }
+    }, [subjects]);
 
     const handleClick = (e) => {
         const input = document.getElementById('studentName').value;
@@ -44,22 +46,31 @@ function SubjectOverview() {
         <>
             <div className="container">
                 <div className="row">
-                    <h2>Übersicht Wahlpflichtfächer</h2>
+                    <h2 style={{marginBottom: '0.75em'}}>Übersicht Wahlpflichtfächer</h2>
+                    <p>Hier finden Sie alle Wahlpflichtfächer, die in diesem Semester angeboten werden.<br/>
+                        Wenn Sie sich für einen bestimmten Wahlpflichtfach anmelden möchten, klicken Sie auf
+                        'Anmelden' in der Aktionsleiste.<br/>Detaillierte Informationen zu den Wahlpflichtfächern finden
+                        Sie im <a href="/">Modulhandbuch</a>.</p>
                     <div className="row row-cols-4 mt-1 mb-4 g-3">
-                        {subjects.map((subject) => (
-                            <SubjectCardView name={subject.name} professor={subject.professor} cp={subject.creditPoints}
-                                             text={subject.description}
-                                             enroll={true}/>
-                        ))}
+                        {
+                            subjects && subjects.length > 0 ? subjects.map((subject) => (
+                                <SubjectCardView key={subject.id.toString()} name={subject.name}
+                                                 professor={subject.professor}
+                                                 cp={subject.creditPoints}
+                                                 text={subject.description}
+                                                 enroll={true}/>
+
+                            )) : 'No subjects at the moment.'
+                        }
                     </div>
                 </div>
                 <div className="row" id="regCreation">
                     <h2>Create registration</h2>
                     <form>
                         <div className="form-group">
-                            <label htmlFor="studentName" style={{ marginLeft: '1em' }}>Enter student name</label>
+                            <label htmlFor="studentName" style={{marginLeft: '1em'}}>Enter student name</label>
                             <input type="text" className="form-control" id="studentName" placeholder="Name"
-                                   style={{ width: '50%', marginBottom: '1em', marginLeft: '1rem' }}/>
+                                   style={{width: '50%', marginBottom: '1em', marginLeft: '1rem'}}/>
                         </div>
                         <button className="btn btn-md btn-primary btn-block"
                                 style={{textAlign: 'center', marginLeft: '1em', width: '10%'}} type="button"

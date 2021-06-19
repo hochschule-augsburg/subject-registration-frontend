@@ -19,7 +19,7 @@ function SubjectCardView(props) {
                     <h6 className="card-subtitle">{props.professor} | {props.cp} CP</h6>
                     <p className="card-text">{props.text}</p>
                     <p className="card-text" style={{marginBottom: '0', color: '#4D4D4D', fontWeight: 600}}>Aktion</p>
-                    <a className="card-link">{props.enroll ? 'Anmelden' : 'Abmelden'}</a>
+                    <a href="/" className="card-link">{props.enroll ? 'Anmelden' : 'Abmelden'}</a>
                 </div>
             </div>
         </div>
