@@ -1,3 +1,12 @@
+a {
+  color: #F00045;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #BD0036;
+}
+
 .btn {
   color: white;
 }
@@ -6,41 +15,30 @@
   color: white;
 }
 
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.btn-primary:hover {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.card-title {
+  color: #F00045;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card-subtitle {
+  color: #4D4D4D;
+  font-weight: 600;
+}
+
+/* css for the main container of each page */
+.container.main {
+  padding-left: 3em;
+}
+
+.container.main.expanded {
+  float: left;
+  padding-left: 4.5em;
+}
+
+.navbar {
+  margin-bottom: 1em;
 }

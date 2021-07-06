@@ -1,0 +1,40 @@
+.account-details {
+    text-align: center;
+}
+
+.burger-menu {
+    position: absolute;
+    top: 76px;
+    width: 15%;
+    height: 100%;
+    background-color: #f8f8f8;
+    /* transition: 0.3s all ease; */
+}
+
+.burger-menu.collapsed {
+    width: 50px;
+}
+
+.burger-menu > .nav-link {
+    height: 3.5em;
+    line-height: 2.5em;
+}
+
+.burger-menu > .nav-link:hover {
+    background-color: #F00045;
+    color: white;
+}
+
+.icon-burger-menu {
+    cursor: pointer;
+    margin-bottom: 0.25em;
+}
+
+.icon-burger-menu:hover {
+    background: #eae9e9;
+}
+
+.icon-burger-menu.collapsed {
+    cursor: pointer;
+    visibility: hidden;
+}
