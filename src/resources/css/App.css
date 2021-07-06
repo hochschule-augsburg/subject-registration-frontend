@@ -47,3 +47,8 @@ a:hover {
 .navbar {
   margin-bottom: 1em;
 }
+
+thead {
+  background-color: #F00045;
+  color: white;
+}

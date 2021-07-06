@@ -24,28 +24,6 @@ function SubjectOverview() {
         }
     }, [subjects]);
 
-    // todo remove when logic is moved to the correct place
-    const handleClick = (e) => {
-        const input = document.getElementById('studentName').value;
-        const text = document.getElementById('regText');
-
-        return callAPI('post', 'registration', {
-            student: input,
-            subjectSelection: [
-                {
-                    "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "points": 1
-                }
-            ]
-        }).then((response) => {
-            console.log('successful call');
-            text.innerText = `Registration for student ${input} was created successfully! Code: ${response.status}`;
-        }).catch((err) => {
-            console.log(`error! ${err}`);
-            text.innerText = err;
-        });
-    }
-
     return (
         <>
             <Navbar />
@@ -66,24 +44,9 @@ function SubjectOverview() {
                                                  text={subject.description}
                                                  enroll={true}/>
 
-                            )) : 'No subjects at the moment.'
+                            )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>
                         }
                     </div>
-                </div>
-                <div className="row" id="regCreation">
-                    <h2>Create registration</h2>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="studentName" style={{marginLeft: '1em'}}>Enter student name</label>
-                            <input type="text" className="form-control" id="studentName" placeholder="Name"
-                                   style={{width: '50%', marginBottom: '1em', marginLeft: '1rem'}}/>
-                        </div>
-                        <button className="btn btn-md btn-primary btn-block"
-                                style={{textAlign: 'center', marginLeft: '1em', width: '10%'}} type="button"
-                                onClick={(e) => handleClick(e)}>Submit
-                        </button>
-                        <p id="regText" style={{marginLeft: '1em', marginTop: '1rem'}}/>
-                    </form>
                 </div>
             </div>
         </>
