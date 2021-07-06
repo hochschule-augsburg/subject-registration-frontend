@@ -16,7 +16,7 @@ function App() {
   return (
       <Router>
         <Route path='/' component={ Home } exact />
-          <Route path='/subjects' component={ SubjectOverview } />
+          <Route path={`/${URLS.SUBJECTS}`} component={ SubjectOverview } />
       </Router>
   );
 }

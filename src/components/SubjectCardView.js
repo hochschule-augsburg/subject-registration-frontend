@@ -11,15 +11,28 @@
  * @constructor
  */
 function SubjectCardView(props) {
+    const handleSubjectClick = (e) => {
+        // todo
+        console.log(`[SubjectCardView][handleSubjectClick] clicked on the subject ${props.name}!`);
+        e.preventDefault();
+    };
+
+    const handleEnrollClick = (e) => {
+        // todo
+        console.log(`[SubjectCardView][handleEnrollClick] clicked on the enroll button of the subject ${props.name}!`);
+        e.preventDefault();
+    };
+
     return (
         <div className="col">
             <div className="card">
                 <div className="card-body">
-                    <h5 className="card-title">{props.name}</h5>
+                    <h5 className="card-title" onClick={(e) => handleSubjectClick(e)}>{props.name}</h5>
                     <h6 className="card-subtitle">{props.professor} | {props.cp} CP</h6>
                     <p className="card-text">{props.text}</p>
                     <p className="card-text" style={{marginBottom: '0', color: '#4D4D4D', fontWeight: 600}}>Aktion</p>
-                    <a href="/" className="card-link">{props.enroll ? 'Anmelden' : 'Abmelden'}</a>
+                    <a href="/" className="card-link"
+                       onClick={(e) => handleEnrollClick(e)}>{props.enroll ? 'Anmelden' : 'Abmelden'}</a>
                 </div>
             </div>
         </div>

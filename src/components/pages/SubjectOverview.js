@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react";
 import {callAPI} from "../../util/api";
 import SubjectCardView from "../SubjectCardView";
+import Navbar from "../layout/Navbar";
+import BurgerMenu from "../layout/BurgerMenu";
+import {URLS} from "../../App";
 
 /**
  * Provides an overview of all available subjects.
@@ -21,6 +24,7 @@ function SubjectOverview() {
         }
     }, [subjects]);
 
+    // todo remove when logic is moved to the correct place
     const handleClick = (e) => {
         const input = document.getElementById('studentName').value;
         const text = document.getElementById('regText');
@@ -44,7 +48,9 @@ function SubjectOverview() {
 
     return (
         <>
-            <div className="container">
+            <Navbar />
+            <BurgerMenu name={URLS.SUBJECTS} />
+            <div className="container main">
                 <div className="row">
                     <h2 style={{marginBottom: '0.75em'}}>Übersicht Wahlpflichtfächer</h2>
                     <p>Hier finden Sie alle Wahlpflichtfächer, die in diesem Semester angeboten werden.<br/>

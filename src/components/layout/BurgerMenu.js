@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useHistory} from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 import {URLS} from "../../App";
 
 const items = document.getElementsByClassName('nav-link');
@@ -8,6 +8,14 @@ const ICON_PROPS = {
     WIDTH: '48px',
     HEIGHT: '48px',
     COLOR: '#F00045'
+};
+
+const NAV_ITEM_MAP = {
+    HOME: 'Home',
+    REGISTRATIONS: 'Meine Anmeldungen',
+    SUBJECTS: 'Übersicht Wahlpflichtfächer',
+    INFO: 'Informationen Wahlpflichtfächer',
+    LOGOUT: 'Abmelden'
 };
 
 /**
@@ -26,7 +34,7 @@ function BurgerMenu(args) {
         const pageContent = document.querySelector('.container.main');
 
         for (let i = 0; i < items.length; i++) {
-            if (items[i].innerHTML.toLowerCase() === args.name) {
+            if (items[i].innerHTML === NAV_ITEM_MAP[args.name.toUpperCase()]) {
                 items[i].classList.add('bg-primary');
                 items[i].classList.add('active');
             }
@@ -92,6 +100,7 @@ function BurgerMenu(args) {
             case URLS.REGISTRATIONS:
                 break;
             case URLS.SUBJECTS:
+                history.push(`/${URLS.SUBJECTS}`);
                 break;
             case URLS.INFO:
                 break;
@@ -124,11 +133,11 @@ function BurgerMenu(args) {
                     <p>Studiengang: IN5</p>
                     <p>Matrikelnummer: 12345678</p>
                 </div>
-                <a className="nav-link link-primary" href="/">Home</a>
-                <a className="nav-link link-primary" href="/">Meine Anmeldungen</a>
-                <a className="nav-link link-primary" href="/">Übersicht Wahlpflichtfächer</a>
-                <a className="nav-link link-primary" href="/">Informationen Wahlpflichtfächer</a>
-                <a className="nav-link link-primary" href="/">Abmelden</a>
+                <Link className="nav-link link-primary" to="/">{NAV_ITEM_MAP.HOME}</Link>
+                <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.REGISTRATIONS}</a>
+                <Link className="nav-link link-primary" to={`/${URLS.SUBJECTS}`}>{NAV_ITEM_MAP.SUBJECTS}</Link>
+                <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.INFO}</a>
+                <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.LOGOUT}</a>
                 { /* home icon */}
                 <svg className="icon-burger-menu collapsed" xmlns="http://www.w3.org/2000/svg" height={ICON_PROPS.HEIGHT}
                      viewBox="0 0 24 24" width={ICON_PROPS.WIDTH}
