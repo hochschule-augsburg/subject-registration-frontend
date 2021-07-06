@@ -1,8 +1,9 @@
 import './resources/css/App.css';
 import './resources/css/BurgerMenu.css';
 import Home from './components/pages/Home';
+import MyRegistrations from "./components/pages/MyRegistrations";
 import SubjectOverview from "./components/pages/SubjectOverview";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 export const URLS = {
     HOME: 'home',
@@ -13,12 +14,13 @@ export const URLS = {
 };
 
 function App() {
-  return (
-      <Router>
-        <Route path='/' component={ Home } exact />
-          <Route path={`/${URLS.SUBJECTS}`} component={ SubjectOverview } />
-      </Router>
-  );
+    return (
+        <Router>
+            <Route path='/' component={Home} exact/>
+            <Route path={`/${URLS.REGISTRATIONS}`} component={MyRegistrations}/>
+            <Route path={`/${URLS.SUBJECTS}`} component={SubjectOverview}/>
+        </Router>
+    );
 }
 
 export default App;
