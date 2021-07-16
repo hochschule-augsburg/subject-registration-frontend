@@ -98,6 +98,7 @@ function BurgerMenu(args) {
                 history.push('/');
                 break;
             case URLS.REGISTRATIONS:
+                history.push(`/${URLS.REGISTRATIONS}`);
                 break;
             case URLS.SUBJECTS:
                 history.push(`/${URLS.SUBJECTS}`);
@@ -134,7 +135,7 @@ function BurgerMenu(args) {
                     <p>Matrikelnummer: 12345678</p>
                 </div>
                 <Link className="nav-link link-primary" to="/">{NAV_ITEM_MAP.HOME}</Link>
-                <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.REGISTRATIONS}</a>
+                <Link className="nav-link link-primary" to={`/${URLS.REGISTRATIONS}`}>{NAV_ITEM_MAP.REGISTRATIONS}</Link>
                 <Link className="nav-link link-primary" to={`/${URLS.SUBJECTS}`}>{NAV_ITEM_MAP.SUBJECTS}</Link>
                 <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.INFO}</a>
                 <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.LOGOUT}</a>
