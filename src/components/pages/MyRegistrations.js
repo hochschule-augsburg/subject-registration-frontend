@@ -19,6 +19,11 @@ const REG_BTN_MAP = {
 const DUMMY_USER = "testuser";
 const DUMMY_REG_ID = "a6f1ae2a-6e60-4a57-a9d7-6dde969bc237"; // registration id of testuser
 
+/**
+ * Displays the current registration of the user and all subjects associated with it.
+ * @return {JSX.Element}
+ * @constructor
+ */
 function MyRegistrations() {
     const [registration, setRegistration] = useState(null);
     const [subjects, setSubjects] = useState(null);
@@ -35,13 +40,13 @@ function MyRegistrations() {
                 callAPI('get', 'subject', {})
                     .then((response) => {
                         const userSubjects = [];
-                        response.data.map((subject) => {
-                            registration.subjectSelection.map((subjectSelection) => {
+                        response.data.forEach((subject) => {
+                            registration.subjectSelection.forEach((subjectSelection) => {
                                 if (subject.id === subjectSelection.subject) {
                                     let foundSubject = subject;
                                     foundSubject.priority = subjectSelection.points;
                                     foundSubject.selectionId = subjectSelection.id;
-                                    return userSubjects.push(foundSubject);
+                                    userSubjects.push(foundSubject);
                                 }
                             });
                         });
@@ -173,7 +178,7 @@ function MyRegistrations() {
                                                                  priority={subject.priority}
                                                                  status={REG_STATUS.RECEIVED}/>
 
-                                            )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>
+                                            )) : 'Momentan sind keine Wahlpflichtfächer vorhanden.'
                                         }
                                         </tbody>
                                     </table>

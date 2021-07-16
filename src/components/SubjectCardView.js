@@ -1,3 +1,6 @@
+import {URLS} from "../App";
+import {useHistory} from "react-router-dom";
+
 /**
  * Represents a single card component in the subject overview page.
  * @param {Object} props Subject properties.
@@ -11,9 +14,18 @@
  * @constructor
  */
 function SubjectCardView(props) {
+    let history = useHistory();
+
     const handleSubjectClick = (e) => {
-        // todo
-        console.log(`[SubjectCardView][handleSubjectClick] clicked on the subject ${props.name}!`);
+        const link = props.name.replace(' ', '_');
+        console.log(`[SubjectCardView][handleSubjectClick] clicked on the subject ${link}!`);
+        history.push({
+            pathname: `${URLS.SUBJECTS}/${link}`,
+            state: {
+                subject: props,
+                prevPath: history.location.pathname
+            }
+        });
         e.preventDefault();
     };
 

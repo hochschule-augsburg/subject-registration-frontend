@@ -1,3 +1,6 @@
+import {useHistory} from "react-router-dom";
+import {URLS} from "../App";
+
 /**
  * Represents a single item in the table of the MyRegistrations page.
  * @param props
@@ -5,9 +8,18 @@
  * @constructor
  */
 function RegistrationTableItem(props) {
-    const handleClick = (e) => {
-        // todo
-        console.log(`[RegistrationTableItem][handleClick] click on subject ${props.subject}!`);
+    let history = useHistory();
+
+    const handleSubjectClick = (e) => {
+        const link = props.subject.replace(' ', '_');
+        console.log(`[RegistrationTableItem][handleClick] click on subject ${link}!`);
+        history.push({
+            pathname: `${URLS.SUBJECTS}/${link}`,
+            state: {
+                subject: props,
+                prevPath: history.location.pathname
+            }
+        });
         e.preventDefault();
     };
 
@@ -19,7 +31,7 @@ function RegistrationTableItem(props) {
     return (
         <>
             <tr>
-                <td><a href="/" onClick={(e) => handleClick(e)}>{props.subject}</a></td>
+                <td><a href="/" onClick={(e) => handleSubjectClick(e)}>{props.subject}</a></td>
                 <td>{props.professor}</td>
                 <td>{props.cp}</td>
                 <td style={{width: "5em"}}>
