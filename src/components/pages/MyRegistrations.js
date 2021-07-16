@@ -16,17 +16,40 @@ const REG_BTN_MAP = {
     EDIT: 'Anmeldung überarbeiten'
 };
 
-//const DUMMY_USER = "testuser";
+const DUMMY_USER = "testuser";
 const DUMMY_REG_ID = "a6f1ae2a-6e60-4a57-a9d7-6dde969bc237"; // registration id of testuser
 
 function MyRegistrations() {
     const [registration, setRegistration] = useState(null);
+    const [subjects, setSubjects] = useState(null);
 
     useEffect(() => {
         return callAPI('get', 'registration', {})
             .then((response) => {
                 // todo get registration of the logged in user
-                setRegistration(response.data[0]);
+                const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
+                if (!registration) {
+                    return;
+                }
+                setRegistration(registration);
+                callAPI('get', 'subject', {})
+                    .then((response) => {
+                        const userSubjects = [];
+                        response.data.map((subject) => {
+                            registration.subjectSelection.map((subjectSelection) => {
+                                if (subject.id === subjectSelection.subject) {
+                                    let foundSubject = subject;
+                                    foundSubject.priority = subjectSelection.points;
+                                    foundSubject.selectionId = subjectSelection.id;
+                                    return userSubjects.push(foundSubject);
+                                }
+                            });
+                        });
+                        console.log('found subjects');
+                        console.log(userSubjects);
+                        setSubjects(userSubjects);
+                    })
+                    .catch((err) => console.log(`could not fetch subjects! ${err}`));
             });
     }, []);
 
@@ -61,35 +84,40 @@ function MyRegistrations() {
             e.preventDefault();
             return;
         }
-        // update existing registration of the user if it was already created
-        return callAPI('put', 'registration', {
-            id: DUMMY_REG_ID,
-            subjectSelection: [
-                {
-                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "points": 1
-                }
-            ]
-        }).then((response) => {
-            console.log('successful call');
-        }).catch((err) => {
-            console.log(`error! ${err}`);
-        });
-        // create a new registration for the user
-        // return callAPI('post', 'registration', {
-        //     student: DUMMY_USER,
-        //     subjectSelection: [
-        //         {
-        //             "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        //             "points": 1
-        //         }
-        //     ]
-        // }).then((response) => {
-        //     console.log('successful call');
-        // }).catch((err) => {
-        //     console.log(`error! ${err}`);
-        // });
+        if (registration) {
+            // todo api not yet working
+            // update existing registration of the user if it was already created
+            return callAPI('put', 'registration', {
+                id: DUMMY_REG_ID,
+                subjectSelection: [
+                    {
+                        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "points": 1
+                    }
+                ]
+            }).then((response) => {
+                console.log('successful call');
+            }).catch((err) => {
+                console.log(`error! ${err}`);
+            });
+        } else {
+            // create a new registration for the user
+            // todo correct subject selection
+            return callAPI('post', 'registration', {
+                student: DUMMY_USER,
+                subjectSelection: [
+                    {
+                        "subject": "24d408e3-2f1d-46b2-a2bb-a2f9f5a5bbce",
+                        "points": 10
+                    }
+                ]
+            }).then((response) => {
+                console.log('successful call');
+            }).catch((err) => {
+                console.log(`error! ${err}`);
+            });
+        }
     };
 
     return (
@@ -115,6 +143,7 @@ function MyRegistrations() {
                     </ul>
                 </div>
                 <div className="row">
+                    {/* todo the table should still be shown if a user added some subjects but did not conclude the reg. yet */}
                     {
                         registration ?
                             <>
@@ -136,21 +165,25 @@ function MyRegistrations() {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <RegistrationTableItem subject="Medizinische Bildverarbeitung"
-                                                               professor="Rösch" cp="5" priority="500"
-                                                               status={REG_STATUS.RECEIVED}/>
-                                        <RegistrationTableItem subject="Agile Softwareentwicklung (Scrum)"
-                                                               professor="Liebermann" cp="5" priority="250"
-                                                               status={REG_STATUS.RECEIVED}/>
+                                        {
+                                            subjects && subjects.length > 0 ? subjects.map((subject) => (
+                                                <RegistrationTableItem key={subject.id.toString()} subject={subject.name}
+                                                                 professor={subject.professor}
+                                                                 cp={subject.creditPoints}
+                                                                 priority={subject.priority}
+                                                                 status={REG_STATUS.RECEIVED}/>
+
+                                            )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
+                                {/* Create / edit registration button */}
                                 <div className="row">
                                     <button className="btn btn-md btn-primary btn-block"
                                             style={{textAlign: 'center', width: "20%", height: "3em"}} type="button"
                                             onClick={(e) => handleRegistration(e)}>
-                                        {/* Todo change btn name depending on whether a reg was already created or not */}
-                                        {REG_BTN_MAP.EDIT}
+                                        {registration ? REG_BTN_MAP.EDIT : REG_BTN_MAP.CREATE}
                                     </button>
                                 </div>
                             </>

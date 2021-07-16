@@ -37,6 +37,13 @@ export function callAPI(method, api, params) {
                     .catch((err) => reject(err))
             }));
             break;
+        case 'PUT':
+            fetchPromise = new Promise(((resolve, reject) => {
+                axios.put(url, params)
+                    .then((response) => resolve(response))
+                    .catch((err) => reject(err))
+            }));
+            break;
         default:
             fetchPromise = Promise.reject(new Error(`Unknown HTTP method: ${method}`));
             break;
