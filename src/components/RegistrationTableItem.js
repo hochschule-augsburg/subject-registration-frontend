@@ -4,6 +4,13 @@ import {URLS} from "../App";
 /**
  * Represents a single item in the table of the MyRegistrations page.
  * @param props
+ * @param {string} props.subject Name of the subject.
+ * @param {string} props.professor Name of the professor responsible for this subject.
+ * @param {number} props.creditPoints Credit points of the subject.
+ * @param {number} props.priority Chosen subject priority of the user.
+ * @param {string} props.status Current status of this subject's registration.
+ * @param {string} props.description Short description of the subject.
+ * @param {string} props.specialization Specialization which is associated with this subject.
  * @return {JSX.Element}
  * @constructor
  */
@@ -33,7 +40,7 @@ function RegistrationTableItem(props) {
             <tr>
                 <td><a href="/" onClick={(e) => handleSubjectClick(e)}>{props.subject}</a></td>
                 <td>{props.professor}</td>
-                <td>{props.cp}</td>
+                <td>{props.creditPoints}</td>
                 <td style={{width: "5em"}}>
                     <form className="form-inline">
                         <input id="priority" type="text" style={{width: "5em"}} defaultValue={props.priority} />

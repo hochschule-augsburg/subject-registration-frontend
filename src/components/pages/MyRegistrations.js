@@ -172,11 +172,14 @@ function MyRegistrations() {
                                         <tbody>
                                         {
                                             subjects && subjects.length > 0 ? subjects.map((subject) => (
-                                                <RegistrationTableItem key={subject.id.toString()} subject={subject.name}
-                                                                 professor={subject.professor}
-                                                                 cp={subject.creditPoints}
-                                                                 priority={subject.priority}
-                                                                 status={REG_STATUS.RECEIVED}/>
+                                                <RegistrationTableItem key={subject.id.toString()}
+                                                                       subject={subject.name}
+                                                                       professor={subject.professor}
+                                                                       creditPoints={subject.creditPoints}
+                                                                       priority={subject.priority}
+                                                                       status={REG_STATUS.RECEIVED}
+                                                                       description={subject.description}
+                                                                       specialization={subject.specialization}/>
 
                                             )) : 'Momentan sind keine Wahlpflichtfächer vorhanden.'
                                         }

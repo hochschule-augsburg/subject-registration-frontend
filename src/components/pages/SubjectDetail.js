@@ -11,7 +11,7 @@ const PREVIOUS_PATH_MAP = {
 };
 
 /**
- * Displays all details of a subject.
+ * Displays all details of a subject. See RegistrationTableItem.js for a list of all props.
  * @param props
  * @return {JSX.Element}
  * @constructor
@@ -25,13 +25,12 @@ function SubjectDetail(props) {
     const subjectName = name.replace('_', ' ');
 
     useEffect(() => {
-        console.log('selected subject: ' + subjectName);
-        console.log('props:');
+        console.log('[SubjectDetail] selected subject: ' + subjectName);
+        console.log('[SubjectDetail] props:');
         console.log(props.location.state);
         if (props.location.state) {
-            // todo
-            setSubject(props.location.state);
-            console.log(`previous URL: ${props.location.state.prevPath}`);
+            setSubject(props.location.state.subject);
+            console.log(`[SubjectDetail] previous URL: ${props.location.state.prevPath}`);
             setPreviousPath(props.location.state.prevPath);
         } else {
             // fetch subject info from backend
@@ -39,7 +38,7 @@ function SubjectDetail(props) {
                 .then((response) => {
                     const subject = response.data.find((s) => s.name === subjectName);
                     setSubject(subject);
-                }).catch((err) => console.log(`Could not fetch subjects! ${err}`));
+                }).catch((err) => console.log(`[SubjectDetail] Could not fetch subjects! ${err}`));
         }
     }, [props.location.state, subjectName]);
 
@@ -62,23 +61,23 @@ function SubjectDetail(props) {
                         {previousPath ? PREVIOUS_PATH_MAP[previousPath] : PREVIOUS_PATH_MAP["/subjects"]}</a> / <a
                         href="/">{subjectName}</a></p>
                     <h2 style={{marginBottom: "0.5em"}}>{subjectName}</h2>
+                    {/* todo correct link */}
                     <p>Detailliertere Informationen finden Sie im <a href='/'>Modulhandbuch.</a></p>
                 </div>
                 <div className="row">
-                    {/*todo subject is always undefined (?)*/}
                     <table className="table">
-                        <tbody>
+                        <tbody className="subject-detail">
                         <tr>
                             <th scope="row">Dozent</th>
-                            <td>b</td>
+                            <td>{subject ? subject.professor : ''}</td>
                         </tr>
                         <tr>
                             <th scope="row">Credit Points</th>
-                            <td>{subject ? subject.cp : ''}</td>
+                            <td>{subject ? subject.creditPoints : ''}</td>
                         </tr>
                         <tr>
                             <th scope="row">Beschreibung</th>
-                            <td>{subject ? subject.cp : ''}</td>
+                            <td>{subject ? subject.description : ''}</td>
                         </tr>
                         </tbody>
                     </table>

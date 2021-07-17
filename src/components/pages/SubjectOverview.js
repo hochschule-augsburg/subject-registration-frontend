@@ -38,10 +38,10 @@ function SubjectOverview() {
                     <div className="row row-cols-4 mt-1 mb-4 g-3">
                         {
                             subjects && subjects.length > 0 ? subjects.map((subject) => (
-                                <SubjectCardView key={subject.id.toString()} name={subject.name}
+                                <SubjectCardView key={subject.id.toString()} subject={subject.name}
                                                  professor={subject.professor}
-                                                 cp={subject.creditPoints}
-                                                 text={subject.description}
+                                                 creditPoints={subject.creditPoints}
+                                                 description={subject.description}
                                                  enroll={true}/>
 
                             )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>

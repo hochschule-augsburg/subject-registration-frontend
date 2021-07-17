@@ -48,6 +48,16 @@ a:hover {
   margin-bottom: 1em;
 }
 
+/* css for the tables in the subject detail page */
+tbody.subject-detail > tr > th {
+  background-color: #F00045;
+  color: white;
+}
+
+tbody.subject-detail > tr > td {
+  padding-left: 1em;
+}
+
 thead {
   background-color: #F00045;
   color: white;
