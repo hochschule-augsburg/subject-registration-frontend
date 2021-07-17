@@ -1,13 +1,32 @@
+import {useHistory} from "react-router-dom";
+import {URLS} from "../App";
+
 /**
  * Represents a single item in the table of the MyRegistrations page.
  * @param props
+ * @param {string} props.subject Name of the subject.
+ * @param {string} props.professor Name of the professor responsible for this subject.
+ * @param {number} props.creditPoints Credit points of the subject.
+ * @param {number} props.priority Chosen subject priority of the user.
+ * @param {string} props.status Current status of this subject's registration.
+ * @param {string} props.description Short description of the subject.
+ * @param {string} props.specialization Specialization which is associated with this subject.
  * @return {JSX.Element}
  * @constructor
  */
 function RegistrationTableItem(props) {
-    const handleClick = (e) => {
-        // todo
-        console.log(`[RegistrationTableItem][handleClick] click on subject ${props.subject}!`);
+    let history = useHistory();
+
+    const handleSubjectClick = (e) => {
+        const link = props.subject.replace(' ', '_');
+        console.log(`[RegistrationTableItem][handleClick] click on subject ${link}!`);
+        history.push({
+            pathname: `${URLS.SUBJECTS}/${link}`,
+            state: {
+                subject: props,
+                prevPath: history.location.pathname
+            }
+        });
         e.preventDefault();
     };
 
@@ -19,9 +38,9 @@ function RegistrationTableItem(props) {
     return (
         <>
             <tr>
-                <td><a href="/" onClick={(e) => handleClick(e)}>{props.subject}</a></td>
+                <td><a href="/" onClick={(e) => handleSubjectClick(e)}>{props.subject}</a></td>
                 <td>{props.professor}</td>
-                <td>{props.cp}</td>
+                <td>{props.creditPoints}</td>
                 <td style={{width: "5em"}}>
                     <form className="form-inline">
                         <input id="priority" type="text" style={{width: "5em"}} defaultValue={props.priority} />
