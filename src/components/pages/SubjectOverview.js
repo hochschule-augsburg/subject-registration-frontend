@@ -1,9 +1,10 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {callAPI} from "../../util/api";
 import SubjectCardView from "../SubjectCardView";
 import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
+import SubjectSelectionContext from "../../context/subjectSelectionContext";
 
 /**
  * Provides an overview of all available subjects.
@@ -12,6 +13,10 @@ import {URLS} from "../../App";
  */
 function SubjectOverview() {
     const [subjects, setSubjects] = useState(null);
+    const {subjectSelection, setSubjectSelection} = useContext(SubjectSelectionContext);
+
+    console.log('[SubjectOverview] subject selection is');
+    console.log(subjectSelection);
 
     useEffect(() => {
         if (!subjects) {

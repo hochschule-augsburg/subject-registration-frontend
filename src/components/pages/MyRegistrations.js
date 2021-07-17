@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {callAPI} from "../../util/api";
 import {Link} from "react-router-dom";
 import RegistrationTableItem from "../RegistrationTableItem";
+import {DUMMY_REG_ID, DUMMY_USER} from "../../App";
 
 const REG_STATUS = {
     RECEIVED: 'Antrag eingegangen',
@@ -16,9 +17,6 @@ const REG_BTN_MAP = {
     EDIT: 'Anmeldung überarbeiten'
 };
 
-const DUMMY_USER = "testuser";
-const DUMMY_REG_ID = "a6f1ae2a-6e60-4a57-a9d7-6dde969bc237"; // registration id of testuser
-
 /**
  * Displays the current registration of the user and all subjects associated with it.
  * @return {JSX.Element}
@@ -26,7 +24,10 @@ const DUMMY_REG_ID = "a6f1ae2a-6e60-4a57-a9d7-6dde969bc237"; // registration id 
  */
 function MyRegistrations() {
     const [registration, setRegistration] = useState(null);
-    const [subjects, setSubjects] = useState(null);
+    const {subjectSelection} = useContext(SubjectSelectionContext);
+
+    console.log('[MyRegistrations] subject selection is');
+    console.log(subjectSelection);
 
     useEffect(() => {
         return callAPI('get', 'registration', {})
@@ -37,25 +38,7 @@ function MyRegistrations() {
                     return;
                 }
                 setRegistration(registration);
-                callAPI('get', 'subject', {})
-                    .then((response) => {
-                        const userSubjects = [];
-                        response.data.forEach((subject) => {
-                            registration.subjectSelection.forEach((subjectSelection) => {
-                                if (subject.id === subjectSelection.subject) {
-                                    let foundSubject = subject;
-                                    foundSubject.priority = subjectSelection.points;
-                                    foundSubject.selectionId = subjectSelection.id;
-                                    userSubjects.push(foundSubject);
-                                }
-                            });
-                        });
-                        console.log('found subjects');
-                        console.log(userSubjects);
-                        setSubjects(userSubjects);
-                    })
-                    .catch((err) => console.log(`could not fetch subjects! ${err}`));
-            });
+            }).catch((err) => console.log(`Could not get the registration of user ${DUMMY_REG_ID}! ${err}`));
     }, []);
 
     /**
@@ -148,9 +131,8 @@ function MyRegistrations() {
                     </ul>
                 </div>
                 <div className="row">
-                    {/* todo the table should still be shown if a user added some subjects but did not conclude the reg. yet */}
                     {
-                        registration ?
+                        subjectSelection && subjectSelection.length > 0 ?
                             <>
                                 <div className="row">
                                     <h5>Informationen zur Anmeldung</h5>
@@ -171,7 +153,7 @@ function MyRegistrations() {
                                         </thead>
                                         <tbody>
                                         {
-                                            subjects && subjects.length > 0 ? subjects.map((subject) => (
+                                            subjectSelection.map((subject) => (
                                                 <RegistrationTableItem key={subject.id.toString()}
                                                                        subject={subject.name}
                                                                        professor={subject.professor}
@@ -181,7 +163,7 @@ function MyRegistrations() {
                                                                        description={subject.description}
                                                                        specialization={subject.specialization}/>
 
-                                            )) : 'Momentan sind keine Wahlpflichtfächer vorhanden.'
+                                            ))
                                         }
                                         </tbody>
                                     </table>
