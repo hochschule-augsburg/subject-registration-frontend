@@ -45,7 +45,7 @@ function Home() {
                         .catch((err) => console.log(`could not fetch subjects! ${err}`));
                 });
         }
-    }, []);
+    }, [subjectSelection, setSubjectSelection]);
 
     return (
         <>

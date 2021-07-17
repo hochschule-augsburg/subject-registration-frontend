@@ -15,9 +15,6 @@ function SubjectOverview() {
     const [subjects, setSubjects] = useState(null);
     const {subjectSelection, setSubjectSelection} = useContext(SubjectSelectionContext);
 
-    console.log('[SubjectOverview] subject selection is');
-    console.log(subjectSelection);
-
     useEffect(() => {
         if (!subjects) {
             console.log('get subjects!');
@@ -28,6 +25,15 @@ function SubjectOverview() {
                 .catch((err) => console.log(`Error! ${err}`));
         }
     }, [subjects]);
+
+    /**
+     * Check if the user has selected the given subject for registration.
+     * @param {Object} subject Subject to check.
+     * @return {boolean} Returns true if the subject is selected; otherwise false.
+     */
+    const isRegistered = (subject) => {
+        return subjectSelection.some((s) => subject.id === s.id);
+    };
 
     return (
         <>
@@ -44,11 +50,12 @@ function SubjectOverview() {
                         {
                             subjects && subjects.length > 0 ? subjects.map((subject) => (
                                 <SubjectCardView key={subject.id.toString()} subject={subject.name}
+                                                 id={subject.id}
                                                  professor={subject.professor}
                                                  creditPoints={subject.creditPoints}
                                                  description={subject.description}
-                                                 enroll={true}/>
-
+                                                 specialization={subject.specialization}
+                                                 enroll={!isRegistered(subject)}/>
                             )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>
                         }
                     </div>

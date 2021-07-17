@@ -1,11 +1,12 @@
 import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {callAPI} from "../../util/api";
 import {Link} from "react-router-dom";
 import RegistrationTableItem from "../RegistrationTableItem";
 import {DUMMY_REG_ID, DUMMY_USER} from "../../App";
+import SubjectSelectionContext from "../../context/subjectSelectionContext";
 
 const REG_STATUS = {
     RECEIVED: 'Antrag eingegangen',
@@ -25,9 +26,6 @@ const REG_BTN_MAP = {
 function MyRegistrations() {
     const [registration, setRegistration] = useState(null);
     const {subjectSelection} = useContext(SubjectSelectionContext);
-
-    console.log('[MyRegistrations] subject selection is');
-    console.log(subjectSelection);
 
     useEffect(() => {
         return callAPI('get', 'registration', {})
@@ -155,6 +153,7 @@ function MyRegistrations() {
                                         {
                                             subjectSelection.map((subject) => (
                                                 <RegistrationTableItem key={subject.id.toString()}
+                                                                       id={subject.id}
                                                                        subject={subject.name}
                                                                        professor={subject.professor}
                                                                        creditPoints={subject.creditPoints}
