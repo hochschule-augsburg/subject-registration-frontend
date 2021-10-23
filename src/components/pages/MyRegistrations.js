@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import RegistrationTableItem from "../RegistrationTableItem";
 import {DUMMY_REG_ID, DUMMY_USER} from "../../App";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
+import userContext from "../../context/userContext";
 
 const REG_STATUS = {
     RECEIVED: 'Antrag eingegangen',
@@ -24,20 +25,27 @@ const REG_BTN_MAP = {
  * @constructor
  */
 function MyRegistrations() {
+    const {user, setUser} = useContext(userContext);
+    const [userInfo, setUserInfo] = useState(null);
     const [registration, setRegistration] = useState(null);
     const {subjectSelection} = useContext(SubjectSelectionContext);
 
     useEffect(() => {
-        return callAPI('get', 'registration', {})
-            .then((response) => {
-                // todo get registration of the logged in user
-                const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
-                if (!registration) {
-                    return;
-                }
-                setRegistration(registration);
+        if (user) {
+            return user.loadUserInfo().then((userInfo) => {
+                setUserInfo(userInfo);
+                return callAPI('get', 'registration', {})
+                    .then((response) => {
+                        // todo get registration of the logged in user
+                        const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
+                        if (!registration) {
+                            return;
+                        }
+                        setRegistration(registration);
+                    })
             }).catch((err) => console.log(`Could not get the registration of user ${DUMMY_REG_ID}! ${err}`));
-    }, []);
+        }
+    }, [user, setUser]);
 
     /**
      * Check if all input from the user is valid (unsigned numbers only).
@@ -109,7 +117,11 @@ function MyRegistrations() {
     return (
         <>
             <Navbar/>
-            <BurgerMenu name={URLS.REGISTRATIONS}/>
+            <BurgerMenu name={URLS.REGISTRATIONS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
+                        major='IN3'
+                        userid='12345678'
+                        logout={user ? user.logout : null}
+            />
             <div className="container main">
                 <div className="row">
                     <h2>Meine Anmeldungen</h2>

@@ -2,8 +2,9 @@ import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
 import {useParams, useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {callAPI} from "../../util/api";
+import userContext from "../../context/userContext";
 
 const PREVIOUS_PATH_MAP = {
     '/registrations': 'Meine Anmeldungen',
@@ -17,6 +18,8 @@ const PREVIOUS_PATH_MAP = {
  * @constructor
  */
 function SubjectDetail(props) {
+    const {user, setUser} = useContext(userContext);
+    const [userInfo, setUserInfo] = useState(null);
     const [subject, setSubject] = useState();
     const [previousPath, setPreviousPath] = useState();
     const {name} = useParams();
@@ -25,22 +28,27 @@ function SubjectDetail(props) {
     const subjectName = name.replace('_', ' ');
 
     useEffect(() => {
-        console.log('[SubjectDetail] selected subject: ' + subjectName);
-        console.log('[SubjectDetail] props:');
-        console.log(props.location.state);
-        if (props.location.state) {
-            setSubject(props.location.state.subject);
-            console.log(`[SubjectDetail] previous URL: ${props.location.state.prevPath}`);
-            setPreviousPath(props.location.state.prevPath);
-        } else {
-            // fetch subject info from backend
-            return callAPI('get', 'subject', {})
-                .then((response) => {
-                    const subject = response.data.find((s) => s.name === subjectName);
-                    setSubject(subject);
-                }).catch((err) => console.log(`[SubjectDetail] Could not fetch subjects! ${err}`));
+        if (user) {
+            return user.loadUserInfo().then((userInfo) => {
+               setUserInfo(userInfo);
+                console.log('[SubjectDetail] selected subject: ' + subjectName);
+                console.log('[SubjectDetail] props:');
+                console.log(props.location.state);
+                if (props.location.state) {
+                    setSubject(props.location.state.subject);
+                    console.log(`[SubjectDetail] previous URL: ${props.location.state.prevPath}`);
+                    setPreviousPath(props.location.state.prevPath);
+                } else {
+                    // fetch subject info from backend
+                    return callAPI('get', 'subject', {})
+                        .then((response) => {
+                            const subject = response.data.find((s) => s.name === subjectName);
+                            setSubject(subject);
+                        }).catch((err) => console.log(`[SubjectDetail] Could not fetch subjects! ${err}`));
+                }
+            });
         }
-    }, [props.location.state, subjectName]);
+    }, [props.location.state, subjectName, user, setUser]);
 
     /**
      * Navigate to the previous page.
@@ -54,7 +62,11 @@ function SubjectDetail(props) {
     return (
         <>
             <Navbar/>
-            <BurgerMenu name={URLS.SUBJECTS}/>
+            <BurgerMenu name={URLS.SUBJECTS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
+                        major='IN3'
+                        userid='12345678'
+                        logout={user ? user.logout : null}
+            />
             <div className="container main">
                 <div className="row" style={{marginBottom: '0.75em'}}>
                     <p style={{color: "#F00045"}}><a href="." onClick={(e) => goBack(e)}>
