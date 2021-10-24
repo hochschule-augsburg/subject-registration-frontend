@@ -24,7 +24,7 @@ function SubjectOverview() {
                 setUserInfo(userInfo);
                 if (!subjects) {
                     console.log('get subjects!');
-                    return callAPI('get', 'subject', {})
+                    return callAPI('get', 'subject', user.token)
                         .then((response) => {
                             setSubjects(response.data);
                         })

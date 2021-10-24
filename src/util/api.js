@@ -11,16 +11,21 @@ const BASE_URL = 'http://localhost:9090/api/';
  *
  * @param {string} method HTTP method to use. (e.g. 'get')
  * @param {string} api API to call. (e.g. 'subject')
- * @param {Object} params Required params for the request.
+ * @param {string} token Access token for validation.
+ * @param {Object}[params={}] Additional params for the request.
  *
  * @return {Promise<any>}
  * - resolves when the backend responds successfully.
  * - rejects with the error when the request was unsuccessful.
  */
-export function callAPI(method, api, params) {
+export function callAPI(method, api, token, params={}) {
     let logPrefix = `[${method.toUpperCase()}]`;
     let url = BASE_URL + api + '/';
     let fetchPromise;
+
+    params['headers'] = {
+        Authorization: 'Bearer ' + token
+    };
 
     switch (method.toUpperCase()) {
         case 'GET':

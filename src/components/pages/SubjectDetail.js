@@ -40,7 +40,7 @@ function SubjectDetail(props) {
                     setPreviousPath(props.location.state.prevPath);
                 } else {
                     // fetch subject info from backend
-                    return callAPI('get', 'subject', {})
+                    return callAPI('get', 'subject', user.token)
                         .then((response) => {
                             const subject = response.data.find((s) => s.name === subjectName);
                             setSubject(subject);

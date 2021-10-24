@@ -34,7 +34,7 @@ function MyRegistrations() {
         if (user) {
             return user.loadUserInfo().then((userInfo) => {
                 setUserInfo(userInfo);
-                return callAPI('get', 'registration', {})
+                return callAPI('get', 'registration', user.token)
                     .then((response) => {
                         // todo get registration of the logged in user
                         const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
@@ -98,7 +98,7 @@ function MyRegistrations() {
         } else {
             // create a new registration for the user
             // todo correct subject selection
-            return callAPI('post', 'registration', {
+            return callAPI('post', 'registration', user.token,{
                 student: DUMMY_USER,
                 subjectSelection: [
                     {

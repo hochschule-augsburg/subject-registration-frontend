@@ -23,7 +23,7 @@ function Home() {
             return user.loadUserInfo().then((userInfo) => {
                 setUserInfo(userInfo);
                 if (!subjectSelection) {
-                    return callAPI('get', 'registration', {})
+                    return callAPI('get', 'registration', user.token)
                         .then((response) => {
                             // todo get registration of the logged in user
                             const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
@@ -31,7 +31,7 @@ function Home() {
                                 return;
                             }
                             //setRegistration(registration);
-                            callAPI('get', 'subject', {})
+                            callAPI('get', 'subject', user.token)
                                 .then((response) => {
                                     const userSubjects = [];
                                     response.data.forEach((subject) => {
