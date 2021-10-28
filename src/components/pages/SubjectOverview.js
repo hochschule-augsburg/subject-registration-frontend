@@ -5,6 +5,7 @@ import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
+import userContext from "../../context/userContext";
 
 /**
  * Provides an overview of all available subjects.
@@ -12,19 +13,26 @@ import SubjectSelectionContext from "../../context/subjectSelectionContext";
  * @constructor
  */
 function SubjectOverview() {
+    const {user, setUser} = useContext(userContext);
+    const [userInfo, setUserInfo] = useState(null);
     const [subjects, setSubjects] = useState(null);
     const {subjectSelection, setSubjectSelection} = useContext(SubjectSelectionContext);
 
     useEffect(() => {
-        if (!subjects) {
-            console.log('get subjects!');
-            return callAPI('get', 'subject', {})
-                .then((response) => {
-                    setSubjects(response.data);
-                })
-                .catch((err) => console.log(`Error! ${err}`));
+        if (user) {
+            return user.loadUserInfo().then((userInfo) => {
+                setUserInfo(userInfo);
+                if (!subjects) {
+                    console.log('get subjects!');
+                    return callAPI('get', 'subject', user.token)
+                        .then((response) => {
+                            setSubjects(response.data);
+                        })
+                        .catch((err) => console.log(`Error! ${err}`));
+                }
+            });
         }
-    }, [subjects]);
+    }, [subjects, user, setUserInfo]);
 
     /**
      * Check if the user has selected the given subject for registration.
@@ -38,7 +46,11 @@ function SubjectOverview() {
     return (
         <>
             <Navbar />
-            <BurgerMenu name={URLS.SUBJECTS} />
+            <BurgerMenu name={URLS.SUBJECTS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
+                        major='IN3'
+                        userid='12345678'
+                        logout={user ? user.logout : null}
+            />
             <div className="container main">
                 <div className="row">
                     <h2 style={{marginBottom: '0.75em'}}>Übersicht Wahlpflichtfächer</h2>
@@ -55,7 +67,7 @@ function SubjectOverview() {
                                                  creditPoints={subject.creditPoints}
                                                  description={subject.description}
                                                  specialization={subject.specialization}
-                                                 enroll={!isRegistered(subject)}/>
+                                                 enroll={subjectSelection ? !isRegistered(subject) : true}/>
                             )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>
                         }
                     </div>
