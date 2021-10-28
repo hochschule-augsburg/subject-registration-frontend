@@ -67,7 +67,7 @@ function SubjectOverview() {
                                                  creditPoints={subject.creditPoints}
                                                  description={subject.description}
                                                  specialization={subject.specialization}
-                                                 enroll={!isRegistered(subject)}/>
+                                                 enroll={subjectSelection ? !isRegistered(subject) : true}/>
                             )) : <p>Momentan sind keine Wahlpflichtfächer vorhanden.</p>
                         }
                     </div>
