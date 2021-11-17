@@ -32,6 +32,7 @@ function App() {
             const keycloak = Keycloak('/keycloak.json');
             return keycloak.init({onLoad: 'login-required'}).then((authenticated) => {
                 console.log('keycloak: ' + JSON.stringify(keycloak));
+                console.log('user id: ' + keycloak.subject);
                 console.log('authenticated: ' + authenticated);
                 setKeycloak(keycloak);
                 setAuthenticated(keycloak.authenticated);
