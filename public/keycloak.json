@@ -1,8 +1,8 @@
 {
-  "realm": "DemoRealm",
+  "realm": "hsa",
   "auth-server-url": "http://localhost:8080/auth/",
   "ssl-required": "external",
-  "resource": "react-client",
+  "resource": "wpf-rest-api",
   "public-client": true,
   "confidential-port": 0,
   "enable-cors": true,
