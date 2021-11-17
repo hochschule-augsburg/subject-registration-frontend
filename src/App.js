@@ -2,6 +2,7 @@ import './resources/css/App.css';
 import './resources/css/BurgerMenu.css';
 import Home from './components/pages/Home';
 import MyRegistrations from "./components/pages/MyRegistrations";
+import StartRegistration from "./components/pages/StartRegistration";
 import SubjectOverview from "./components/pages/SubjectOverview";
 import SubjectDetail from "./components/pages/SubjectDetail";
 import {BrowserRouter as Router, Route} from "react-router-dom";
@@ -13,6 +14,7 @@ import Keycloak from "keycloak-js";
 export const URLS = {
     HOME: 'home',
     REGISTRATIONS: 'registrations',
+    START_REGISTRATION: 'startRegistration',
     SUBJECTS: 'subjects',
     INFO: 'info',
     LOGOUT: 'logout'
@@ -50,6 +52,7 @@ function App() {
                             <Router>
                                 <Route path='/' component={Home} exact/>
                                 <Route path={`/${URLS.REGISTRATIONS}`} component={MyRegistrations}/>
+                                <Route path={`/${URLS.START_REGISTRATION}`} component={StartRegistration}/>
                                 <Route path={`/${URLS.SUBJECTS}`} component={SubjectOverview} exact/>
                                 <Route path={`/${URLS.SUBJECTS}/:name`} component={SubjectDetail}/>
                             </Router>
