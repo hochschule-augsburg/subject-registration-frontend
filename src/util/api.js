@@ -23,12 +23,11 @@ export function callAPI(method, api, token, params={}) {
     let url = BASE_URL + api + '/';
     let fetchPromise;
 
-    params['headers'] = {
-        Authorization: 'Bearer ' + token
-    };
-
     switch (method.toUpperCase()) {
         case 'GET':
+            params['headers'] = {
+                Authorization: 'Bearer ' + token
+            };
             fetchPromise = new Promise(((resolve, reject) => {
                 axios.get(url, params)
                     .then((response) => resolve(response))
@@ -37,7 +36,11 @@ export function callAPI(method, api, token, params={}) {
             break;
         case 'POST':
             fetchPromise = new Promise(((resolve, reject) => {
-                axios.post(url, params)
+                axios.post(url, params, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                })
                     .then((response) => resolve(response))
                     .catch((err) => reject(err))
             }));

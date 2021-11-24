@@ -47,9 +47,10 @@ function SubjectOverview() {
         <>
             <Navbar />
             <BurgerMenu name={URLS.SUBJECTS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
-                        major='IN3'
+                        major={userInfo ? userInfo.degreeCourse : ''}
                         userid='12345678'
                         logout={user ? user.logout : null}
+                        timestamp={userInfo ? userInfo.createTimestamp : '20210911'}
             />
             <div className="container main">
                 <div className="row">
