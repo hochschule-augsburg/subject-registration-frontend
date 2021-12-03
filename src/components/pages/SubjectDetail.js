@@ -3,8 +3,9 @@ import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
 import {useParams, useHistory} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
-import {callAPI} from "../../util/api";
 import userContext from "../../context/userContext";
+import {SubjectControllerApi} from "../../api";
+import {getRequestHeaders} from "../../util/util";
 
 const PREVIOUS_PATH_MAP = {
     '/registrations': 'Meine Anmeldungen',
@@ -18,6 +19,7 @@ const PREVIOUS_PATH_MAP = {
  * @constructor
  */
 function SubjectDetail(props) {
+    const subjectApi = new SubjectControllerApi();
     const {user, setUser} = useContext(userContext);
     const [userInfo, setUserInfo] = useState(null);
     const [subject, setSubject] = useState();
@@ -40,7 +42,7 @@ function SubjectDetail(props) {
                     setPreviousPath(props.location.state.prevPath);
                 } else {
                     // fetch subject info from backend
-                    return callAPI('get', 'subject', user.token)
+                    return subjectApi.getAllSubjects(getRequestHeaders(user))
                         .then((response) => {
                             const subject = response.data.find((s) => s.name === subjectName);
                             setSubject(subject);
@@ -64,7 +66,7 @@ function SubjectDetail(props) {
             <Navbar/>
             <BurgerMenu name={URLS.SUBJECTS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
                         major={userInfo ? userInfo.degreeCourse : ''}
-                        userid='12345678'
+                        preferred_username={userInfo ? userInfo.preferred_username : ''}
                         logout={user ? user.logout : null}
                         timestamp={userInfo ? userInfo.createTimestamp : '20210911'}
             />

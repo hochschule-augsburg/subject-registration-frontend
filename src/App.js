@@ -35,7 +35,9 @@ function App() {
             return keycloak.init({onLoad: 'login-required'}).then((authenticated) => {
                 console.log('keycloak: ' + JSON.stringify(keycloak));
                 console.log('user id: ' + keycloak.subject);
+                console.log('idTokenParsed: ' + JSON.stringify(keycloak.idTokenParsed));
                 console.log('authenticated: ' + authenticated);
+                console.log(keycloak.idTokenParsed.preferred_username);
                 setKeycloak(keycloak);
                 setAuthenticated(keycloak.authenticated);
                 setUser(keycloak);

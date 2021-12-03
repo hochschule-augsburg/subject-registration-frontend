@@ -1,11 +1,11 @@
 import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
-import {callAPI} from "../../util/api";
+import {RegistrationControllerApi, SubjectControllerApi} from "typescript-axios";
 import {useContext, useEffect, useState} from "react";
 import userContext from "../../context/userContext";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
-import {DUMMY_REG_ID} from "../../App";
+import {getRequestHeaders} from "../../util/util";
 
 /**
  * Main page of the application.
@@ -13,6 +13,8 @@ import {DUMMY_REG_ID} from "../../App";
  * @constructor
  */
 function Home() {
+    const registrationApi = new RegistrationControllerApi();
+    const subjectApi = new SubjectControllerApi();
     const {user, setUser} = useContext(userContext);
     const [userInfo, setUserInfo] = useState(null);
     const {subjectSelection, setSubjectSelection} = useContext(SubjectSelectionContext);
@@ -23,15 +25,15 @@ function Home() {
             return user.loadUserInfo().then((userInfo) => {
                 setUserInfo(userInfo);
                 if (!subjectSelection) {
-                    return callAPI('get', 'registration', user.token)
+                    return registrationApi.getRegistration(user.subject, getRequestHeaders(user))
                         .then((response) => {
-                            // todo get registration of the logged in user
-                            const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
+                            console.log(`registrations of user ${user.subject}: ${response.data}`);
+                            const registration = response.data;
                             if (!registration) {
                                 return;
                             }
                             //setRegistration(registration);
-                            callAPI('get', 'subject', user.token)
+                            return subjectApi.getAllSubjects(getRequestHeaders(user))
                                 .then((response) => {
                                     const userSubjects = [];
                                     response.data.forEach((subject) => {
@@ -60,7 +62,7 @@ function Home() {
             <Navbar />
             <BurgerMenu name={URLS.HOME} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
                         major={userInfo ? userInfo.degreeCourse : ''}
-                        userid='12345678'
+                        preferred_username={userInfo ? userInfo.preferred_username : ''}
                         logout={user ? user.logout : null}
                         timestamp={userInfo ? userInfo.createTimestamp : '20210911'}
             />

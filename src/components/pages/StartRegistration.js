@@ -3,7 +3,7 @@ import BurgerMenu from "../layout/BurgerMenu";
 import {useContext, useEffect, useState} from "react";
 import {URLS} from "../../App";
 import userContext from "../../context/userContext";
-import {callAPI} from "../../util/api";
+import {RegistrationWindowControllerApi} from "../../api";
 
 /**
  * Represents the start registration page where authorized docents can initiate the subject registration process.
@@ -11,6 +11,7 @@ import {callAPI} from "../../util/api";
  * @constructor
  */
 function StartRegistration() {
+    const registrationWindowApi = new RegistrationWindowControllerApi();
     const {user} = useContext(userContext);
     const [userInfo, setUserInfo] = useState(null);
 
@@ -32,10 +33,10 @@ function StartRegistration() {
     const startRegistration = (e) => {
         const input = document.getElementsByTagName('input');
 
-        return callAPI('post', 'registration_window', user.token, {
-                semester: input[0].value,
-                startDate: input[1].value,
-                endDate: input[2].value
+        return registrationWindowApi.createNewRegistrationWindow({
+            semester: input[0].value,
+            startDate: input[1].value,
+            endDate: input[2].value
         })
             .then((registration) => {
                 console.log(registration);
@@ -50,7 +51,7 @@ function StartRegistration() {
             <Navbar/>
             <BurgerMenu name={URLS.REGISTRATIONS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
                         major={userInfo ? userInfo.degreeCourse : ''}
-                        userid='12345678'
+                        preferred_username={userInfo ? userInfo.preferred_username : ''}
                         logout={user ? user.logout : null}
                         timestamp={userInfo ? userInfo.createTimestamp : '20210911'}
             />
