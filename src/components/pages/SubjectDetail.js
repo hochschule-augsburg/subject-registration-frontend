@@ -4,7 +4,7 @@ import {URLS} from "../../App";
 import {useParams, useHistory} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import userContext from "../../context/userContext";
-import {SubjectControllerApi} from "../../api";
+import {SubjectControllerApi} from "typescript-axios";
 import {getRequestHeaders} from "../../util/util";
 
 const PREVIOUS_PATH_MAP = {

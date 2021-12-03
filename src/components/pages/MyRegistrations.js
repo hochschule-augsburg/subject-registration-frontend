@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import RegistrationTableItem from "../RegistrationTableItem";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
 import userContext from "../../context/userContext";
-import {RegistrationControllerApi} from "../../api";
+import {RegistrationControllerApi} from "typescript-axios";
 import {getRequestHeaders} from "../../util/util";
 
 const REG_STATUS = {

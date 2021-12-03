@@ -20,9 +20,6 @@ export const URLS = {
     LOGOUT: 'logout'
 };
 
-export const DUMMY_USER = "testuser";
-export const DUMMY_REG_ID = "a6f1ae2a-6e60-4a57-a9d7-6dde969bc237"; // registration id of testuser
-
 function App() {
     const [user, setUser] = useState(null);
     const [subjectSelection, setSubjectSelection] = useState(null);

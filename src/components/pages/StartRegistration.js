@@ -3,7 +3,7 @@ import BurgerMenu from "../layout/BurgerMenu";
 import {useContext, useEffect, useState} from "react";
 import {URLS} from "../../App";
 import userContext from "../../context/userContext";
-import {RegistrationWindowControllerApi} from "../../api";
+import {RegistrationWindowControllerApi} from "typescript-axios";
 
 /**
  * Represents the start registration page where authorized docents can initiate the subject registration process.
