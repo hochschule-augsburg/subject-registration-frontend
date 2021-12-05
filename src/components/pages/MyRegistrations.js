@@ -2,12 +2,12 @@ import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
 import {useContext, useEffect, useState} from "react";
-import {callAPI} from "../../util/api";
 import {Link} from "react-router-dom";
 import RegistrationTableItem from "../RegistrationTableItem";
-import {DUMMY_REG_ID, DUMMY_USER} from "../../App";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
 import userContext from "../../context/userContext";
+import {RegistrationControllerApi} from "typescript-axios";
+import {getRequestHeaders} from "../../util/util";
 
 const REG_STATUS = {
     RECEIVED: 'Antrag eingegangen',
@@ -25,6 +25,7 @@ const REG_BTN_MAP = {
  * @constructor
  */
 function MyRegistrations() {
+    const registrationApi = new RegistrationControllerApi();
     const {user, setUser} = useContext(userContext);
     const [userInfo, setUserInfo] = useState(null);
     const [registration, setRegistration] = useState(null);
@@ -34,16 +35,16 @@ function MyRegistrations() {
         if (user) {
             return user.loadUserInfo().then((userInfo) => {
                 setUserInfo(userInfo);
-                return callAPI('get', 'registration', user.token)
+                return registrationApi.getRegistration(user.subject, getRequestHeaders(user))
                     .then((response) => {
-                        // todo get registration of the logged in user
-                        const registration = response.data.find((reg) => reg.id === DUMMY_REG_ID);
+                        console.log(`registrations of user ${user.subject}: ${response.data}`);
+                        const registration = response.data;
                         if (!registration) {
                             return;
                         }
                         setRegistration(registration);
                     })
-            }).catch((err) => console.log(`Could not get the registration of user ${DUMMY_REG_ID}! ${err}`));
+            }).catch((err) => console.log(`Could not get the registration of user ${user.subject}! ${err}`));
         }
     }, [user, setUser]);
 
@@ -79,18 +80,18 @@ function MyRegistrations() {
             return;
         }
         if (registration) {
-            // todo api not yet working
+            // todo api not tested yet
             // update existing registration of the user if it was already created
-            return callAPI('put', 'registration', {
-                id: DUMMY_REG_ID,
-                subjectSelection: [
-                    {
-                        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "points": 1
-                    }
-                ]
-            }).then((response) => {
+            return registrationApi.updateRegistration({
+                    student: user.preferred_username,
+                    subjectSelection: [
+                        {
+                            "registration": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "points": 1
+                        }
+                        ]
+            }, getRequestHeaders(user)).then((response) => {
                 console.log('successful call');
             }).catch((err) => {
                 console.log(`error! ${err}`);
@@ -98,14 +99,14 @@ function MyRegistrations() {
         } else {
             // create a new registration for the user
             // todo correct subject selection
-            return callAPI('post', 'registration', user.token,{
-                student: DUMMY_USER,
-                subjectSelection: [
-                    {
-                        "subject": "24d408e3-2f1d-46b2-a2bb-a2f9f5a5bbce",
-                        "points": 10
-                    }
-                ]
+            return registrationApi.createNewRegistration({
+                student: user.preferred_username,
+                    subjectSelection: [
+                {
+                    "subject": "24d408e3-2f1d-46b2-a2bb-a2f9f5a5bbce",
+                    "points": 10
+                }
+            ]
             }).then((response) => {
                 console.log('successful call');
             }).catch((err) => {
@@ -119,7 +120,7 @@ function MyRegistrations() {
             <Navbar/>
             <BurgerMenu name={URLS.REGISTRATIONS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
                         major={userInfo ? userInfo.degreeCourse : ''}
-                        userid='12345678'
+                        preferred_username={userInfo ? userInfo.preferred_username : ''}
                         logout={user ? user.logout : null}
                         timestamp={userInfo ? userInfo.createTimestamp : '20210911'}
             />

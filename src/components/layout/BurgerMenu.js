@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useHistory, Link} from "react-router-dom";
 import {URLS} from "../../App";
-import calculateSemester from "../../util/util";
+import {calculateSemester} from "../../util/util";
 
 const items = document.getElementsByClassName('nav-link');
 const itemsCollapsed = document.getElementsByClassName('icon-burger-menu collapsed');
@@ -25,7 +25,7 @@ const NAV_ITEM_MAP = {
  * @param {string} args.name Name of the page. (e.g. 'home')
  * @param {string} args.username Name of the logged in user.
  * @param {string} args.major Major of the user. (e.g. IN5)
- * @param {string} args.userid The student ID.
+ * @param {string} args.preferred_username The RZ name of the student.
  * @param {Function} args.logout Function which logs out the user from the application.
  * @param {string} args.timestamp Creation timestamp of the user's RZ account.
  * @return {JSX.Element}
@@ -139,7 +139,7 @@ function BurgerMenu(args) {
                     </svg>
                     <p>{args.username ? args.username : 'Max Mustermann'}</p>
                     <p>Studiengang: {args.major ? args.major + calculateSemester(args.timestamp) : 'IN5'}</p>
-                    <p>Matrikelnummer: {args.userid ? args.userid : ' '}</p>
+                    <p>RZ-Kennung: {args.preferred_username ? args.preferred_username : ' '}</p>
                 </div>
                 <Link className="nav-link link-primary" to="/">{NAV_ITEM_MAP.HOME}</Link>
                 <Link className="nav-link link-primary" to={`/${URLS.REGISTRATIONS}`}>{NAV_ITEM_MAP.REGISTRATIONS}</Link>

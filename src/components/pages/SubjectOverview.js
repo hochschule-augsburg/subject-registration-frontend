@@ -1,11 +1,12 @@
 import {useContext, useEffect, useState} from "react";
-import {callAPI} from "../../util/api";
+import {SubjectControllerApi} from "typescript-axios";
 import SubjectCardView from "../SubjectCardView";
 import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import {URLS} from "../../App";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
 import userContext from "../../context/userContext";
+import {getRequestHeaders} from "../../util/util";
 
 /**
  * Provides an overview of all available subjects.
@@ -13,6 +14,7 @@ import userContext from "../../context/userContext";
  * @constructor
  */
 function SubjectOverview() {
+    const subjectApi = new SubjectControllerApi();
     const {user, setUser} = useContext(userContext);
     const [userInfo, setUserInfo] = useState(null);
     const [subjects, setSubjects] = useState(null);
@@ -24,7 +26,7 @@ function SubjectOverview() {
                 setUserInfo(userInfo);
                 if (!subjects) {
                     console.log('get subjects!');
-                    return callAPI('get', 'subject', user.token)
+                    return subjectApi.getAllSubjects(getRequestHeaders(user))
                         .then((response) => {
                             setSubjects(response.data);
                         })
@@ -48,7 +50,7 @@ function SubjectOverview() {
             <Navbar />
             <BurgerMenu name={URLS.SUBJECTS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
                         major={userInfo ? userInfo.degreeCourse : ''}
-                        userid='12345678'
+                        preferred_username={userInfo ? userInfo.preferred_username : ''}
                         logout={user ? user.logout : null}
                         timestamp={userInfo ? userInfo.createTimestamp : '20210911'}
             />

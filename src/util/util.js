@@ -8,6 +8,19 @@ const MONTH_IN_DAYS = 30.417;
 const SEMESTER_IN_MONTHS = 6;
 
 /**
+ * Create the HTTP request headers with the given user instance.
+ * @param {Object} user - User instance.
+ * @return {{headers: {Authorization: string}}} The appropriate HTTP request headers.
+ */
+function getRequestHeaders(user) {
+    return {
+        headers: {
+            Authorization: 'Bearer ' + user.token
+        }
+    };
+}
+
+/**
  * Calculates the current semester of the student based on the creation timestamp of the RZ account.
  * Source: https://stackoverflow.com/questions/3224834/get-difference-between-2-dates-in-javascript
  * @param {string} creationTimestamp Creation timestamp of the account.
@@ -25,4 +38,7 @@ function calculateSemester(creationTimestamp) {
     return Math.floor(diffInMonths / SEMESTER_IN_MONTHS) + 1; // increment to get current semester
 }
 
-module.exports = calculateSemester;
+module.exports = {
+    calculateSemester,
+    getRequestHeaders
+};

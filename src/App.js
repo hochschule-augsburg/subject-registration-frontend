@@ -20,9 +20,6 @@ export const URLS = {
     LOGOUT: 'logout'
 };
 
-export const DUMMY_USER = "testuser";
-export const DUMMY_REG_ID = "a6f1ae2a-6e60-4a57-a9d7-6dde969bc237"; // registration id of testuser
-
 function App() {
     const [user, setUser] = useState(null);
     const [subjectSelection, setSubjectSelection] = useState(null);
@@ -35,7 +32,9 @@ function App() {
             return keycloak.init({onLoad: 'login-required'}).then((authenticated) => {
                 console.log('keycloak: ' + JSON.stringify(keycloak));
                 console.log('user id: ' + keycloak.subject);
+                console.log('idTokenParsed: ' + JSON.stringify(keycloak.idTokenParsed));
                 console.log('authenticated: ' + authenticated);
+                console.log(keycloak.idTokenParsed.preferred_username);
                 setKeycloak(keycloak);
                 setAuthenticated(keycloak.authenticated);
                 setUser(keycloak);
