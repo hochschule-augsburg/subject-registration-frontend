@@ -76,3 +76,22 @@ thead {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* css for the pagination component */
+.page-link {
+  color: #F00045;
+}
+
+.page-link.active {
+  color: white;
+  background-color: #F00045;
+}
+
+.page-link:hover {
+  color: #BD0036;
+}
+
+.page-link.disabled {
+  color: #4D4D4D;
+  pointer-events: none;
+}
