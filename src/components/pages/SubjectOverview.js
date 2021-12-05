@@ -28,6 +28,7 @@ function SubjectOverview() {
                     console.log('get subjects!');
                     return subjectApi.getAllSubjects(getRequestHeaders(user))
                         .then((response) => {
+                            console.log(`first subject: ${JSON.stringify(response.data[0])}`);
                             setSubjects(response.data);
                         })
                         .catch((err) => console.log(`Error! ${err}`));

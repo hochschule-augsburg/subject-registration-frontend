@@ -62,3 +62,17 @@ thead {
   background-color: #F00045;
   color: white;
 }
+
+/* css for the subject cards in the subject overview page */
+.subject-card {
+  min-height: 260px;
+  max-height: 260px;
+  overflow: scroll;
+}
+
+.subject-card-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
