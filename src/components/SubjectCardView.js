@@ -19,6 +19,8 @@ const ENROLL_STATUS = {
  * @param {string} props.creditPoints Credit points of the subject.
  * @param {string} props.description Short description text of the subject.
  * @param {string} props.specialization Specialization which is associated with this subject.
+ * @param {string} props.capacity Defines how many students can take part in this subject
+ * @param {boolean} props.status True if this subject is available; otherwise false.
  * @param {boolean} props.enroll True => show user that they can register for this subject; False => show user that they
  * can unregister from this subject.
  * @return {JSX.Element}
@@ -50,8 +52,9 @@ function SubjectCardView(props) {
      * @param {MouseEvent} e Instance of the mouse event.
      */
     const handleEnrollClick = (e) => {
+        e.preventDefault();
         console.log(`[SubjectCardView][handleEnrollClick] clicked on the enroll button of the subject ${props.subject}!`);
-        let subjects = Array.from(subjectSelection);
+        let subjects = subjectSelection ? Array.from(subjectSelection) : [];
         if (props.enroll) {
             subjects.push({
                 id: props.id,
@@ -60,13 +63,15 @@ function SubjectCardView(props) {
                 professor: props.professor,
                 priority: 0,
                 description: props.description,
-                specialization: props.specialization
+                specialization: props.specialization,
+                capacity: props.capacity,
+                status: props.status
             });
         } else {
             subjects = subjects.filter((subject) => subject.id !== props.id);
         }
+        console.log(`subject selection: ${JSON.stringify(subjects)}`);
         setSubjectSelection(subjects);
-        e.preventDefault();
     };
 
     return (
