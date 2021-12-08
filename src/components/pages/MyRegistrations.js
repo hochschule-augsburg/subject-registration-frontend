@@ -37,6 +37,7 @@ function MyRegistrations() {
                 setUserInfo(userInfo);
                 return registrationApi.getRegistration(user.subject, getRequestHeaders(user))
                     .then((response) => {
+                        console.log(`subject selection of ${userInfo.preferred_username}: ${JSON.stringify(subjectSelection)}`);
                         console.log(`registrations of user ${user.subject}: ${response.data}`);
                         const registration = response.data;
                         if (!registration) {
@@ -83,30 +84,48 @@ function MyRegistrations() {
             // todo api not tested yet
             // update existing registration of the user if it was already created
             return registrationApi.updateRegistration({
-                    student: user.preferred_username,
-                    subjectSelection: [
-                        {
-                            "registration": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "points": 1
-                        }
-                        ]
+                id: user.subject,
+                subjectSelection: [
+                    {
+                        "registration": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "subject": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "points": 1
+                    }
+                ]
             }, getRequestHeaders(user)).then((response) => {
                 console.log('successful call');
             }).catch((err) => {
                 console.log(`error! ${err}`);
             });
         } else {
-            // create a new registration for the user
+            // create a new registration for the user. only works if a registration window is active
             // todo correct subject selection
+            const arr = [];
+            subjectSelection.forEach((subject) => {
+                arr.push({
+                    registration: {
+                        id: user.subject,
+                        student: user.idTokenParsed.preferred_username
+                    },
+                    subject: {
+                        id: subject.id,
+                        name: subject.name,
+                        professor: subject.professor,
+                        creditPoints: 10,
+                        capacity: subject.capacity,
+                        status: subject.status,
+                        description: subject.description,
+                        specialization: subject.specialization
+                    },
+                    points: 10
+                });
+            });
+
+            console.log(`create new registration with ${JSON.stringify(arr)}`);
+
             return registrationApi.createNewRegistration({
-                student: user.preferred_username,
-                    subjectSelection: [
-                {
-                    "subject": "24d408e3-2f1d-46b2-a2bb-a2f9f5a5bbce",
-                    "points": 10
-                }
-            ]
+                "student": user.idTokenParsed.preferred_username,
+                "subjectSelection": arr
             }).then((response) => {
                 console.log('successful call');
             }).catch((err) => {
@@ -118,7 +137,8 @@ function MyRegistrations() {
     return (
         <>
             <Navbar/>
-            <BurgerMenu name={URLS.REGISTRATIONS} username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
+            <BurgerMenu name={URLS.REGISTRATIONS}
+                        username={userInfo ? `${userInfo.given_name} ${userInfo.family_name}` : ''}
                         major={userInfo ? userInfo.degreeCourse : ''}
                         preferred_username={userInfo ? userInfo.preferred_username : ''}
                         logout={user ? user.logout : null}

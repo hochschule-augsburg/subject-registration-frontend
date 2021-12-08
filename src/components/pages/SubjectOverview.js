@@ -40,6 +40,7 @@ function SubjectOverview() {
                     return subjectApi.getAllSubjects(getRequestHeaders(user))
                         .then((response) => {
                             console.log(`got ${response.data.length} subjects`);
+                            console.log(`subject selection of ${userInfo.preferred_username}: ${JSON.stringify(subjectSelection)}`);
                             setSubjects(response.data);
                         })
                         .catch((err) => console.log(`Error! ${err}`));
@@ -69,8 +70,7 @@ function SubjectOverview() {
                                     COURSE_CATALOGUE.MASTER : COURSE_CATALOGUE.BACHELOR : '/'}>Modulhandbuch</a>.
                     </p>
                     {subjects && subjects.length > 0 ?
-                        <Pagination data={subjects} subjectSelection={subjectSelection ? subjectSelection : []}
-                                    dataLimit={SUBJECT_LIMIT} pageLimit={PAGE_LIMIT}/>
+                        <Pagination data={subjects} dataLimit={SUBJECT_LIMIT} pageLimit={PAGE_LIMIT}/>
                         : <p>{NO_SUBJECTS}</p>}
                 </div>
             </div>
