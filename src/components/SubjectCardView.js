@@ -4,6 +4,7 @@ import {useContext} from "react";
 import SubjectSelectionContext from "../context/subjectSelectionContext";
 
 const ACTION = 'Aktion';
+const NO_DESCRIPTION = 'Keine Beschreibung vorhanden.';
 const ENROLL_STATUS = {
     REGISTER: 'Anmelden',
     UNREGISTER: 'Abmelden'
@@ -71,10 +72,10 @@ function SubjectCardView(props) {
     return (
         <div className="col">
             <div className="card">
-                <div className="card-body">
+                <div className="card-body subject-card">
                     <h5 className="card-title" onClick={(e) => handleSubjectClick(e)}>{props.subject}</h5>
                     <h6 className="card-subtitle">{props.professor} | {props.creditPoints} CP</h6>
-                    <p className="card-text">{props.description}</p>
+                    <p className="card-text subject-card-description">{props.description ? props.description : NO_DESCRIPTION}</p>
                     <p className="card-text" style={{marginBottom: '0', color: '#4D4D4D', fontWeight: 600}}>{ACTION}</p>
                     <a href="/" className="card-link"
                        onClick={(e) => handleEnrollClick(e)}>
