@@ -19,14 +19,7 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-react": "^7.0.0",
-    "@openapitools/openapi-generator-cli": "^2.4.18",
-    "css-loader": "^6.5.1",
-    "sass-loader": "^12.4.0",
-    "ts-loader": "^9.2.6",
-    "webpack-cli": "^4.9.1"
+    "@openapitools/openapi-generator-cli": "^2.4.18"
   },
   "scripts": {
     "start": "react-scripts start",
