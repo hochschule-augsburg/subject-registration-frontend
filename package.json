@@ -16,8 +16,7 @@
     "sass": "^1.34.0",
     "typescript": "^4.5.2",
     "typescript-axios": "file:src/api",
-    "web-vitals": "^1.1.2",
-    "webpack": "^4.44.2"
+    "web-vitals": "^1.1.2"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.4.18",
