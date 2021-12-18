@@ -5,6 +5,7 @@ import MyRegistrations from "./components/pages/MyRegistrations";
 import StartRegistration from "./components/pages/StartRegistration";
 import SubjectOverview from "./components/pages/SubjectOverview";
 import SubjectDetail from "./components/pages/SubjectDetail";
+import Info from "./components/pages/Info";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {useEffect, useState} from "react";
 import userContext from "./context/userContext";
@@ -18,6 +19,12 @@ export const URLS = {
     SUBJECTS: 'subjects',
     INFO: 'info',
     LOGOUT: 'logout'
+};
+
+export const MASTER_MAJORS = ['MIN', 'BIS', 'IMS'];
+export const COURSE_CATALOGUE = {
+    BACHELOR: 'https://cloud.hs-augsburg.de/s/e6bYJTCP4JQ5RXj',
+    MASTER: 'https://cloud.hs-augsburg.de/s/a7TnPfxtmXbxTcD'
 };
 
 function App() {
@@ -55,6 +62,7 @@ function App() {
                                 <Route path={`/${URLS.START_REGISTRATION}`} component={StartRegistration}/>
                                 <Route path={`/${URLS.SUBJECTS}`} component={SubjectOverview} exact/>
                                 <Route path={`/${URLS.SUBJECTS}/:name`} component={SubjectDetail}/>
+                                <Route path={`/${URLS.INFO}`} component={Info}/>
                             </Router>
                         </SubjectSelectionContext.Provider>
                         </userContext.Provider>

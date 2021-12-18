@@ -110,6 +110,7 @@ function BurgerMenu(args) {
                 history.push(`/${URLS.SUBJECTS}`);
                 break;
             case URLS.INFO:
+                history.push(`/${URLS.INFO}`);
                 break;
             case URLS.LOGOUT:
                 args.logout();
@@ -144,7 +145,7 @@ function BurgerMenu(args) {
                 <Link className="nav-link link-primary" to="/">{NAV_ITEM_MAP.HOME}</Link>
                 <Link className="nav-link link-primary" to={`/${URLS.REGISTRATIONS}`}>{NAV_ITEM_MAP.REGISTRATIONS}</Link>
                 <Link className="nav-link link-primary" to={`/${URLS.SUBJECTS}`}>{NAV_ITEM_MAP.SUBJECTS}</Link>
-                <a className="nav-link link-primary" href="/">{NAV_ITEM_MAP.INFO}</a>
+                <Link className="nav-link link-primary" to={`/${URLS.INFO}`}>{NAV_ITEM_MAP.INFO}</Link>
                 <Link className="nav-link link-primary" to={`/`} onClick={() => args.logout()}>{NAV_ITEM_MAP.LOGOUT}</Link>
                 { /* home icon */}
                 <svg className="icon-burger-menu collapsed" xmlns="http://www.w3.org/2000/svg" height={ICON_PROPS.HEIGHT}
