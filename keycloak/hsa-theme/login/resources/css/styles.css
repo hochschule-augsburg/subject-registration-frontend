@@ -1,0 +1,13 @@
+.login-pf body {
+    background: #F00045;
+    background-image: url('../img/hsa-wallpaper.jpg');
+    background-size: cover;
+}
+
+div.card-pf {
+    border: none;
+}
+
+.pf-c-button.pf-m-primary {
+    background-color: #F00045;
+}
