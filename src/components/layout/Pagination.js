@@ -1,5 +1,6 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import SubjectCardView from "../SubjectCardView";
+import SubjectSelectionContext from "../../context/subjectSelectionContext";
 
 const PREVIOUS = 'Previous';
 const NEXT = 'Next';
@@ -12,9 +13,10 @@ const NEXT = 'Next';
  * @param {number} dataLimit Max. number of data that should be shown.
  * @constructor
  */
-function Pagination({data, subjectSelection, pageLimit, dataLimit}) {
+function Pagination({data, pageLimit, dataLimit}) {
     const [pages] = useState(Math.round(data.length / dataLimit));
     const [currentPage, setCurrentPage] = useState(1);
+    const {subjectSelection, setSubjectSelection} = useContext(SubjectSelectionContext);
 
     /**
      * Go to the next page.
@@ -72,7 +74,7 @@ function Pagination({data, subjectSelection, pageLimit, dataLimit}) {
      * @return {boolean} Returns true if the subject is selected; otherwise false.
      */
     const isRegistered = (subject) => {
-        return subjectSelection.length > 0 ? subjectSelection.some((s) => subject.id === s.id) : false;
+        return subjectSelection && subjectSelection.length > 0 ? subjectSelection.some((s) => subject.id === s.id) : false;
     };
 
     return (
@@ -83,11 +85,13 @@ function Pagination({data, subjectSelection, pageLimit, dataLimit}) {
                     {getPaginatedData().map((subject, idx) => (
                         <SubjectCardView key={idx}
                                          subject={subject.name}
-                                         number={subject.id}
+                                         id={subject.id}
                                          professor={subject.professor}
                                          creditPoints={subject.creditPoints}
                                          description={subject.description}
                                          specialization={subject.specialization}
+                                         capacity={subject.capacity}
+                                         status={subject.status}
                                          enroll={!isRegistered(subject)}
                         />
                     ))}
