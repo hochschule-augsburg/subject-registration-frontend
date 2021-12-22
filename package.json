@@ -29,7 +29,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "apiGeneration": "openapi-generator-cli generate -i http://localhost:9090/v3/api-docs -g typescript-axios -o src/api"
+    "apiGeneration": "openapi-generator-cli generate -i http://dpforhs.informatik.hs-augsburg.de:8080/v3/api-docs -g typescript-axios -o src/api"
   },
   "eslintConfig": {
     "extends": [
