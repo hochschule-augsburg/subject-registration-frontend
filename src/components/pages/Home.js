@@ -7,6 +7,8 @@ import userContext from "../../context/userContext";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
 import {getRequestHeaders} from "../../util/util";
 
+const IMPRINT_URL = 'https://www.hs-augsburg.de/Service/Impressum.html';
+
 /**
  * Main page of the application.
  * @return {JSX.Element}
@@ -82,7 +84,7 @@ function Home() {
                 </div>
                 <div className="row">
                     <h2>Impressum</h2>
-                    <a href='/' style={{marginBottom: '0.5rem'}}>Link</a>
+                    <a href={IMPRINT_URL} style={{marginBottom: '0.5rem'}}>Link</a>
                 </div>
             </div>
         </>

@@ -3,7 +3,7 @@ import {SubjectControllerApi} from "typescript-axios";
 import Navbar from "../layout/Navbar";
 import BurgerMenu from "../layout/BurgerMenu";
 import Pagination from "../layout/Pagination";
-import {URLS} from "../../App";
+import {URLS, MASTER_MAJORS, COURSE_CATALOGUE} from "../../App";
 import SubjectSelectionContext from "../../context/subjectSelectionContext";
 import userContext from "../../context/userContext";
 import {getRequestHeaders} from "../../util/util";
@@ -13,11 +13,6 @@ const SUBJECT_LIMIT = 16;
 // defines the max. number of page numbers that should be shown on the pagination component.
 const PAGE_LIMIT = 4;
 const NO_SUBJECTS = 'Momentan sind keine Wahlpflichtfächer vorhanden.';
-const MASTER_MAJORS = ['MIN', 'BIS', 'IMS'];
-const COURSE_CATALOGUE = {
-    BACHELOR: 'https://cloud.hs-augsburg.de/s/e6bYJTCP4JQ5RXj',
-    MASTER: 'https://cloud.hs-augsburg.de/s/a7TnPfxtmXbxTcD'
-};
 
 /**
  * Provides an overview of all available subjects.
