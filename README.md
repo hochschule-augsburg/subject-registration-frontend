@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# Welcome
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome the the frontend repository of the HSA subject regsitration project! See the steps below to setup the frontend step by step.
 
-## Available Scripts
+All relevant information can be found in the [wiki](https://github.com/hsa-projects/subject-registration-frontend/wiki) page of this repository.
 
-In the project directory, you can run:
+Tasks for this project are tracked on this [page](https://github.com/hsa-projects/subject-registration-frontend/projects/1).
 
-### `npm start`
+# Getting started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Note:** Make sure that you're connected to the HSA VPN (necessary for authentication to work)! Please refer to this [page](https://www.hs-augsburg.de/en/IT-Services-Center-2/Network.html) for more information.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 0. Install dependencies
 
-### `npm test`
+At first, the dependencies of this project need to be installed. Run `npm install` or `yarn` inside the project root folder in order to do this.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Make sure that you've pulled the [backend repository](https://github.com/hsa-projects/subject-registration) of this project.
 
-### `npm run build`
+### 1. Keycloak server
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Init the keycloak server with `sudo docker-compose up` (at path `subject-registration/docker`, backend repo)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ * **Note**: if the keycloak server is already initialized, you only have to start the container via `sudo docker-compose start`
+ *  Use `sudo docker-compose stop` to stop the container
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Backend
 
-### `npm run eject`
+Start the backend: either in IntelliJ by clicking on the Start Application button or in a terminal with command `mvn spring-boot:run` (run inside project root folder)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 3. Generate API client
+In order to generate the API client, run the script `npm run apiGeneration` inside the project root folder. Make sure that backend is running at the time you do this.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* **Note:** generally, you only need to generate the client once. You should, however, re-run the script if some changes are made in backend.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 4. Start frontend
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Start the frontend with `npm run start` (run inside project root folder)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Now a new page on your browser should show up with the address http://localhost:3000/
